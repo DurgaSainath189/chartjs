@@ -9,10 +9,13 @@ const chartTypes = [
   "pie",
   "doughnut",
   "radar",
-  "polarArea"
+  "polarArea",
+  "scatter",
+  "bubble",
+  "area",
+  "mixed"
 ] as const;
 type ChartType = (typeof chartTypes)[number];
-
 
 export default function Home() {
   const [selectedChart, setSelectedChart] = useState<ChartType>("bar");
@@ -20,7 +23,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-gradient-to-tr from-[#e0eafc] to-[#cfdef3] flex flex-col items-center justify-center px-4 py-10 font-sans">
       <h1 className="text-4xl md:text-5xl font-bold mb-10 text-gray-800 drop-shadow-lg">
-        Demo charts with sample data{" "}
+        Demo charts with sample data
       </h1>
 
       <div className="flex flex-wrap justify-center gap-4 mb-10">

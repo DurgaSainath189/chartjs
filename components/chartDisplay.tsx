@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   Bar,
@@ -7,7 +7,9 @@ import {
   Doughnut,
   Radar,
   PolarArea,
-} from 'react-chartjs-2';
+  Scatter,
+  Bubble,
+} from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -20,14 +22,25 @@ import {
   Title,
   Tooltip,
   Legend,
-} from 'chart.js';
+  Filler,
+  // BubbleDataPoint,
+  // ScatterDataPoint,
+} from "chart.js";
+
+
+import {Chart as Charttype} from 'react-chartjs-2'
+
 
 import {
   barLineData,
   pieDoughnutData,
   radarData,
   polarAreaData,
-} from '@/data/sampleData';
+  scatterData,
+  bubbleData,
+  areaData,
+  mixedData,
+} from "@/data/sampleData";
 
 ChartJS.register(
   CategoryScale,
@@ -39,10 +52,21 @@ ChartJS.register(
   RadialLinearScale,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  Filler
 );
 
-type ChartType = 'bar' | 'line' | 'pie' | 'doughnut' | 'radar' | 'polarArea';
+type ChartType =
+  | "bar"
+  | "line"
+  | "pie"
+  | "doughnut"
+  | "radar"
+  | "polarArea"
+  | "scatter"
+  | "bubble"
+  | "area"
+  | "mixed";
 
 interface Props {
   type: ChartType;
@@ -50,18 +74,60 @@ interface Props {
 
 export default function ChartDisplay({ type }: Props) {
   switch (type) {
-    case 'bar':
+    case "bar":
       return <Bar data={barLineData} />;
-    case 'line':
+    case "line":
       return <Line data={barLineData} />;
-    case 'pie':
+    case "pie":
       return <Pie data={pieDoughnutData} />;
-    case 'doughnut':
+    case "doughnut":
       return <Doughnut data={pieDoughnutData} />;
-    case 'radar':
+    case "radar":
       return <Radar data={radarData} />;
-    case 'polarArea':
+    case "polarArea":
       return <PolarArea data={polarAreaData} />;
+    case "scatter":
+      return <Scatter data={scatterData} />;
+    case "bubble":
+      return <Bubble data={bubbleData} />;
+    case "area":
+      return (
+        <Line
+          data={areaData}
+          options={{ plugins: { legend: { display: true } }, responsive: true }}
+        />
+      );
+    case "mixed":
+      return (
+        <Charttype
+          type="bar"
+          data={mixedData}
+          options={{
+            responsive: true,
+            plugins: { legend: { display: true } },
+            scales: {
+              y: {
+                beginAtZero: true,
+                title: {
+                  display: true,
+                  text: "Profits",
+                },
+              },
+              y1: {
+                beginAtZero: true,
+                position: "right",
+                grid: {
+                  drawOnChartArea: false,
+                },
+                title: {
+                  display: true,
+                  text: "Growth (%)",
+                },
+              },
+            },
+          }}
+        />
+      );
     default:
       return null;
   }
