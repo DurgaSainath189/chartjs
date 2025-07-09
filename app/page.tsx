@@ -1,5 +1,6 @@
 "use client";
 
+import AIBot from "@/components/aiBot";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 
@@ -7,7 +8,7 @@ export default function HomePage() {
   const router = useRouter();
 
   const handleNavigate = () => {
-    router.push("/chart");
+    router.push("/dashboard");
   };
 
   const spotlightRef = useRef<HTMLDivElement>(null);
@@ -136,6 +137,7 @@ export default function HomePage() {
           animation: glow 2.5s ease-in-out infinite alternate;
         }
       `}</style>
+      <AIBot />
     </main>
   );
 }
